@@ -10,7 +10,7 @@ func _process(_delta):
 
 func update() -> void:
 	self.text = "%s (%s/%s)" % [
-		Events.get_turn(),
-		Events.get_max_cycle(),
-		Events.get_cycle(),
+		GameTick.get_turn(),
+		GameTick.get_max_cycle(),
+		GameTick.get_cycle(),
 	]

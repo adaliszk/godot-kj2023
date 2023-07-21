@@ -9,4 +9,4 @@ func _process(_delta):
 
 
 func update() -> void:
-	self.text = "%s" % Events.get_turn()
+	self.text = "%s" % GameTick.get_turn()

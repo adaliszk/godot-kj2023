@@ -2,4 +2,6 @@
 .vscode
 .godot
 
+GIT_HASH.txt
+
 addons

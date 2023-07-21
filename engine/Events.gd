@@ -21,7 +21,6 @@ func _ready() -> void:
 	_TIMER.wait_time = _CYCLE_TIME
 	_TIMER.connect("timeout", tick.bind(self))
 	add_child(_TIMER)
-	start_ticks()
 
 
 func start_ticks() -> void:

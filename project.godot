@@ -18,8 +18,8 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-Events="*res://globals/Events.gd"
-Game="*res://globals/Game.gd"
+Events="*res://engine/Events.gd"
+Game="*res://engine/Game.gd"
 
 [display]
 

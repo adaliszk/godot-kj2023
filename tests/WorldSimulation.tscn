@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bidprphmkbjgc"]
+[gd_scene load_steps=7 format=3 uid="uid://bidprphmkbjgc"]
 
 [ext_resource type="Script" path="res://tests/WorldSimulation.gd" id="1_f4t8d"]
 [ext_resource type="TileSet" uid="uid://bhdpbp0t56fr6" path="res://assets/tilemaps/inputs.tres" id="2_g8hv1"]
 [ext_resource type="PackedScene" uid="uid://dvf453fwcy8i0" path="res://ui/TopOverlay.tscn" id="3_fn6uh"]
 [ext_resource type="PackedScene" uid="uid://cy45synh0pre" path="res://entities/Town.tscn" id="3_ukgce"]
 [ext_resource type="PackedScene" uid="uid://dngomgyqmylrb" path="res://ui/BottomOverlay.tscn" id="4_eto7r"]
+[ext_resource type="PackedScene" uid="uid://chsgg8f855i5d" path="res://entities/ResourceNode.tscn" id="4_sd2c0"]
 
 [node name="WorldSimulation" type="Node2D"]
 script = ExtResource("1_f4t8d")
@@ -60,6 +61,54 @@ y_sort_enabled = true
 pinned = true
 map = NodePath("../../TileMap")
 tile = Vector2i(8, 2)
+
+[node name="ResouceNode1" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(6, 4)
+
+[node name="ResouceNode2" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(5, 3)
+
+[node name="ResouceNode3" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(5, 5)
+
+[node name="ResouceNode4" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(3, 0)
+
+[node name="ResouceNode5" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(4, 0)
+
+[node name="ResouceNode6" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(2, 6)
+
+[node name="ResouceNode7" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(1, 5)
+
+[node name="ResouceNode8" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
+z_index = 9
+y_sort_enabled = true
+map = NodePath("../../TileMap")
+tile = Vector2i(13, 3)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

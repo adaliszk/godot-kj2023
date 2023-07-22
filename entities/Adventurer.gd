@@ -6,74 +6,161 @@ extends CharacterBody2D
 @export var rank: Rank.TIER
 
 @onready var navigation: NavigationAgent2D = $NavigationAgent
-@onready var state_display: Label = $Control/Bubble/Data/State
 
-@export var total_quests: int = 0
+@onready var state_display: Label = $Dialogue/Bubble/Data/State
+@onready var level_display: Label = $Dialogue/Bubble/Data/Level
+
 var current_quest: Quest
+@export var total_quests: int = 0
 
-var can_move: bool = false
-var next_route: Vector2
+@export var rankup_limit: int = 100
+@export var rank_quests: int = 0
+
+@export var max_enery: int = 20
+@export var energy: int = 1
+
+@export var can_move: bool = false
+@export var movement_speed: float = 200
+@export var next_route: Vector2
 
 @export var work_length: int = 0
 @export var work_state: int = 0
 
+@export var night_owl: bool = false
+
+
+func _ready() -> void:
+	GameTick.connect("night_tick", _on_night_tick.bind(self))
+	GameTick.connect("day_tick", _on_day_tick.bind(self))
+
 
 func _init():
-	var rng = RandomNumberGenerator.new()
+	var rng := RandomNumberGenerator.new()
 	rank = 6 - rng.randi_range(0, 2) as Rank.TIER
-	print("Adventurer with ", rank, " rank joined!")
-	show()
+	night_owl = rng.randi_range(0, 1) == 1
+	print("Adventurer with ", Rank.name(rank), " rank joined!")
+	_update_stats()
+	hide()
 
 
-func set_map_location(map: TileMap, poi: MapLocation) -> void:
+func set_map_location(poi: MapLocation) -> void:
 	location = poi
 
 
-func _on_tick() -> void:
+func _on_night_tick(_state: int, _event) -> void:
+	can_move = false if not night_owl else true
+	_update_stats()
 	_update_state()
+
+
+func _on_day_tick(_state: int, _event) -> void:
+	_update_state()
+
 	if current_quest == null:
 		pick_quest()
 		return
+
 	advance_quest()
 
 
 func _update_state() -> void:
-	state_display.text = "zZz"
-	if current_quest:
-		state_display.text = "%s (%s/%s)" % [
-			Quest.STATUS.keys()[current_quest.state], current_quest.length, work_state
+	level_display.text = (
+		"%s-Rank Q(%s/%s) E(%s/%s)"
+		% [
+			Rank.name(rank),
+			rankup_limit,
+			rank_quests,
+			max_enery,
+			energy
 		]
+	)
+
+	state_display.text = "zZz"
+	if current_quest is Quest:
+		state_display.text = (
+			"[%s] %s (%s/%s)"
+			% [
+				Rank.name(current_quest.danger),
+				Quest.STATUS.keys()[current_quest.state],
+				current_quest.length,
+				work_state
+			]
+		)
+
+
+func _update_stats() -> void:
+	var multiplier = Rank.TIER_MULTIPLIER[rank]
+
+	max_enery = ceili(10 * multiplier)
+	rankup_limit = ceili(100 * multiplier)
+
+	if rank_quests >= rankup_limit:
+		rank = rank - 1 as Rank.TIER
+		rank_quests = 0
+		print("Adventurer with ", Rank.name(rank), " rank advanced!")
+		_update_stats()
+
+	if energy <= max_enery and not can_move:
+		energy = energy + 1
 
 
 func _physics_process(_delta):
-	if not (current_quest is Quest): return
+	if not (current_quest is Quest):
+		return
+
 	velocity = Vector2.ZERO
-	
 	if can_move and not navigation.is_target_reached():
 		next_route = to_local(navigation.get_next_path_position()).normalized()
-		velocity = next_route * 500 
+		velocity = next_route * movement_speed
 		move_and_slide()
 
-	
 
 func pick_quest() -> void:
-	if not (location is Town): return
-	if current_quest is Quest: return
+	if not (location is Town) or current_quest is Quest:
+		return
+
+	var available = location.QUESTS.filter(
+		func(q): return q.danger <= rank and q.danger >= rank - 2
+	)
+
+	available.sort_custom(
+		func(a, b): return a.reward > b.reward
+	)
+
+	if len(available) == 0:
+		return
 	
-	var available = location.QUESTS.filter(func(q): return q.danger <= rank -1 )
-	print("Picking quests in ", location.name, " for a rank-", rank, " adventurer from: ", available)
-	if len(available) == 0: return
-	
-	current_quest = available.pick_random()
-	var board_index = location.QUESTS.find(current_quest)
+	var quest_candidate = available.pop_front()
+	while len(available) > 0:
+		if quest_candidate.length > max_enery:
+			break
+		quest_candidate = available.pop_front()
+
+	var board_index = location.QUESTS.find(quest_candidate)
 	location.QUESTS.remove_at(board_index)
+	current_quest = quest_candidate
 
 
 func advance_quest() -> void:
-	if not (current_quest is Quest): return
-	
+	can_move = false
+	if not (current_quest is Quest) or energy <= 0:
+		energy = energy + 1
+		return
+
 	if navigation.is_target_reached():
-		current_quest.set_state(Quest.STATUS.PROGRESSING)
+		if current_quest.state == Quest.STATUS.SUCCESS:
+			total_quests = total_quests + 1
+			rank_quests = rank_quests + 1
+			location = current_quest.issuer
+			location.quest_done(current_quest)
+			current_quest = null
+			hide()
+			return
+
+		if current_quest.state == Quest.STATUS.ON_ROUTE:
+			current_quest.set_state(Quest.STATUS.PROGRESSING)
+			show()
+			return
 
 	if current_quest.state == Quest.STATUS.WAITING:
 		work_length = current_quest.length
@@ -88,11 +175,18 @@ func advance_quest() -> void:
 			plan_route(current_quest.issuer)
 			show()
 			return
-			
+
+		if energy <= 0:
+			current_quest.set_state(Quest.STATUS.FAILURE)
+			plan_route(current_quest.issuer)
+			show()
+			return
+
 		location = current_quest.target
 		work_state = work_state + 1
+		energy = energy - 1
 		return
-	
+
 	can_move = true
 	location = null
 	show()

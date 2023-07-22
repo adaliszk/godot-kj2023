@@ -73,8 +73,8 @@ func _on_cycle_tick(_state: int, _event) -> void:
 	if _state > _MAX_CYCLE:
 		emit_signal("turn_tick", _TURN)
 	
-	if _state < 6:
+	if _state < 7:
 		emit_signal("day_tick", _TURN + _CYCLE)
 		return
 	
-	emit_signal("night_tick", _TURN + (_CYCLE - 6))
+	emit_signal("night_tick", _TURN + (_CYCLE - 7))

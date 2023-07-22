@@ -8,19 +8,14 @@ extends LocationWithDialogue
 var aventurer = preload("res://entities/Adventurer.tscn")
 
 
-var POPULATION: int = 25
-var SIZE: int = 50
+@export var POPULATION: int = 2
+@export var SIZE: int = 5
 
 
-var QUESTS_DONE: int = 0
+@export var QUEST_MIN_TIER: Rank.TIER = Rank.TIER.F
+@export var QUEST_MAX_TIER: Rank.TIER = Rank.TIER.F
+@export var QUESTS_DONE: int = 0
 var QUESTS: Array = []
-
-
-
-func _on_day_tick(_state: int, _event) -> void:
-	# Updating adventurers
-	for unit in UNITS:
-		unit._on_tick()
 
 
 func _on_turn_tick(_state: int, _event) -> void:
@@ -39,7 +34,12 @@ func tick() -> void:
 		var newbies = rng.randi_range(0, 5)
 		for n in range(newbies):
 			var unit = aventurer.instantiate()
-			unit.set_map_location(self._map, self)
+			unit.set_map_location(self)
+
+			# Update Quest Tiers
+			if unit.rank < QUEST_MAX_TIER:
+				QUEST_MAX_TIER = unit.rank
+			
 			UNITS.append(unit)
 			add_child(unit)
 
@@ -48,7 +48,7 @@ func tick() -> void:
 
 	# Spawning Quests
 	if len(UNITS) > 0:
-		var quests = rng.randi_range(1, 3)
+		var quests = rng.randi_range(0, 3)
 		var locations = []
 		
 		for target in get_parent().get_children():
@@ -56,19 +56,27 @@ func tick() -> void:
 		
 		for n in range(quests):
 			var target = locations.pick_random()
-			QUESTS.append(Quest.new(self, target))
-		
-		print(name, " sent ", quests, " new quests!")
+			QUESTS.append(Quest.new(self, target, QUEST_MIN_TIER, QUEST_MAX_TIER))
 
 	# Abandoning Quests due to them taking too long to be picked
-	if len(QUESTS) > POPULATION * 2:
-		var abandon = round(len(QUESTS) - POPULATION * 1.5)
+	if len(QUESTS) > POPULATION * 4:
+		var abandon = round(len(QUESTS) - POPULATION * 2)
 		for n in range(abandon):
+			if len(QUESTS) == 0:
+				break
 			var q = QUESTS.pick_random()
 			QUESTS.remove_at(QUESTS.find(q))
-			q.queue_free()
+			QUESTS_DONE -= 1
+			if q:
+				q.queue_free()
 		print(name, " ABADONED ", abandon, " quests!")
 
+	_update_dialogue()
+
+
+func quest_done(report: Quest) -> void:
+	report.queue_free()
+	QUESTS_DONE += 1
 	_update_dialogue()
 
 

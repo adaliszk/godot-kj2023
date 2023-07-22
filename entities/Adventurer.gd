@@ -154,6 +154,7 @@ func advance_quest() -> void:
 			location = current_quest.issuer
 			location.quest_done(current_quest)
 			current_quest = null
+			work_state = 0
 			hide()
 			return
 

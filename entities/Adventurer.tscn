@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm8elmso5xr12"]
+
+[ext_resource type="Script" path="res://entities/Adventurer.gd" id="1_m35ht"]
+[ext_resource type="Texture2D" uid="uid://byf0n7mvp8rle" path="res://assets/icon.svg" id="2_a104c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdmmk"]
+size = Vector2(52, 50)
+
+[node name="Adventurer" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_m35ht")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(2.38419e-07, 0)
+scale = Vector2(0.515625, 0.507813)
+texture = ExtResource("2_a104c")
+
+[node name="NavigationAgent" type="NavigationAgent2D" parent="."]
+path_desired_distance = 16.0
+target_desired_distance = 16.0
+path_max_distance = 32.0
+path_postprocessing = 1
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0, 1, 1)
+debug_path_custom_point_size = 32.0
+debug_path_custom_line_width = 8.0
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_wdmmk")
+disabled = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -88.0
+offset_right = 20.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Bubble" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Data" type="MarginContainer" parent="Control/Bubble"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="State" type="Label" parent="Control/Bubble/Data"]
+layout_mode = 2
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1

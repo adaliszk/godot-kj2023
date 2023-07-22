@@ -10,7 +10,9 @@ config_version=5
 
 [application]
 
-config/name="Kenney Jam 2023"
+config/name="Sunreach Frontier"
+config/tags=PackedStringArray("gamejam")
+run/main_scene="res://tests/WorldSimulation.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 run/low_processor_mode=true
 boot_splash/bg_color=Color(0, 0, 0, 1)
@@ -19,7 +21,7 @@ config/icon="res://assets/icon.svg"
 [autoload]
 
 GameTick="*res://engine/GameTick.gd"
-Game="*res://engine/Game.gd"
+SceneManager="*res://engine/SceneManager.gd"
 
 [display]
 

@@ -7,20 +7,30 @@ signal day_tick(state: int)
 
 
 var _TIMER : Timer
-var _CYCLE_TIME = 12.0
-var _CYCLE = 0
+
+var _CYCLE = -1
 var _MAX_CYCLE = 8
-var _TURN = 1
+var _TURN = 0
+
+const SPEED_VALUES = [INF, 2.0, 1.0, 0.5]
+enum SPEED { PAUSE, NORMAL, DOUBLE, TRIPLE }
 
 
 func _ready() -> void:
 	connect("cycle_tick", _on_cycle_tick.bind(self))
 	connect("turn_tick", _on_turn_tick.bind(self))
 	
+	emit_signal("cycle_tick", _CYCLE +1)
+	emit_signal("turn_tick", _TURN +1)
+	
 	_TIMER = Timer.new()
-	_TIMER.wait_time = _CYCLE_TIME
 	_TIMER.connect("timeout", tick.bind(self))
+	set_speed(SPEED.NORMAL)
 	add_child(_TIMER)
+
+
+func set_speed(speed: SPEED) -> void:
+	_TIMER.wait_time = SPEED_VALUES[speed]
 
 
 func start_ticks() -> void:
@@ -64,7 +74,7 @@ func _on_cycle_tick(_state: int, _event) -> void:
 		emit_signal("turn_tick", _TURN)
 	
 	if _state < 6:
-		emit_signal("day_tick", _TURN + _state)
+		emit_signal("day_tick", _TURN + _CYCLE)
 		return
 	
-	emit_signal("night_tick", _TURN + (_state - 6))
+	emit_signal("night_tick", _TURN + (_CYCLE - 6))

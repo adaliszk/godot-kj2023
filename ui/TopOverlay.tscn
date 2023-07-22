@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://drxgbwgk80lrx" path="res://ui/components/TurnWidget.tscn" id="1_e3nle"]
 
-[node name="Overlay" type="Control"]
+[node name="TopOverlay" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

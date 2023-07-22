@@ -2,6 +2,7 @@
 .vscode
 .godot
 
-GIT_HASH.txt
+**/*.tmp
 
 addons
+GIT_HASH.txt

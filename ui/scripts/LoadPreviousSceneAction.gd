@@ -2,4 +2,4 @@ extends Button
 
 
 func _pressed() -> void:
-	Game.load_previous_scene()
+	SceneManager.load_previous_scene()

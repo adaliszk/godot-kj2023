@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://chsgg8f855i5d"]
+
+[ext_resource type="Script" path="res://entities/ResourceNode.gd" id="1_v203w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e88sb"]
+size = Vector2(266, 251.5)
+
+[node name="ResouceNode" type="Node2D"]
+script = ExtResource("1_v203w")
+
+[node name="PointerTarget" type="Area2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="PointerTarget"]
+position = Vector2(2, -13.25)
+shape = SubResource("RectangleShape2D_e88sb")
+
+[node name="Dialogue" type="PanelContainer" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -122.0
+offset_top = -97.0
+offset_right = 122.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Spacer" type="MarginContainer" parent="Dialogue"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Container" type="VBoxContainer" parent="Dialogue/Spacer"]
+layout_mode = 2
+
+[node name="DebugInfo" type="RichTextLabel" parent="Dialogue/Spacer/Container"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+text = "..."
+scroll_active = false
+autowrap_mode = 0
+deselect_on_focus_loss_enabled = false
+
+[node name="Data" type="HBoxContainer" parent="Dialogue/Spacer/Container"]
+layout_mode = 2
+
+[node name="DisplayName" type="Label" parent="Dialogue/Spacer/Container/Data"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "ResouceNode"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Dialogue/Spacer/Container/Data"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+toggle_mode = true
+text = "P"
+
+[node name="Actions" type="HBoxContainer" parent="Dialogue/Spacer/Container"]
+layout_mode = 2
+
+[node name="Collect" type="Button" parent="Dialogue/Spacer/Container/Actions"]
+layout_mode = 2
+text = "Collect"
+
+[node name="Guad" type="Button" parent="Dialogue/Spacer/Container/Actions"]
+layout_mode = 2
+text = "Guard"
+
+[connection signal="input_event" from="PointerTarget" to="." method="_on_input"]
+[connection signal="mouse_entered" from="PointerTarget" to="." method="_on_focus"]
+[connection signal="mouse_exited" from="PointerTarget" to="." method="_on_blur"]
+[connection signal="toggled" from="Dialogue/Spacer/Container/Data/Button" to="." method="set_pinned"]

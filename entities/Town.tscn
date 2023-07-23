@@ -1,12 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy45synh0pre"]
+[gd_scene load_steps=4 format=3 uid="uid://cy45synh0pre"]
 
 [ext_resource type="Script" path="res://entities/Town.gd" id="1_fh145"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e88sb"]
 size = Vector2(266, 251.5)
 
-[node name="Town" type="Node2D"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ipdtw"]
+
+[node name="Town" type="Node2D" node_paths=PackedStringArray("debug_info", "population_label", "display_name")]
 script = ExtResource("1_fh145")
+debug_info = NodePath("Dialogue/Spacer/Container/DebugInfo")
+population_label = NodePath("Dialogue/Spacer/Container/Data/Header/Highlight/Population")
+display_name = NodePath("Dialogue/Spacer/Container/Data/DisplayName")
 
 [node name="PointerTarget" type="Area2D" parent="."]
 
@@ -37,6 +42,7 @@ theme_override_constants/margin_bottom = 15
 layout_mode = 2
 
 [node name="DebugInfo" type="RichTextLabel" parent="Dialogue/Spacer/Container"]
+visible = false
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 text = "..."
@@ -50,24 +56,42 @@ layout_mode = 2
 [node name="Header" type="HBoxContainer" parent="Dialogue/Spacer/Container/Data"]
 layout_mode = 2
 
-[node name="Population" type="Label" parent="Dialogue/Spacer/Container/Data/Header"]
+[node name="Highlight" type="VBoxContainer" parent="Dialogue/Spacer/Container/Data/Header"]
+layout_mode = 2
+theme_override_constants/separation = -4
+
+[node name="Label" type="Label" parent="Dialogue/Spacer/Container/Data/Header/Highlight"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "People:"
+
+[node name="Population" type="Label" parent="Dialogue/Spacer/Container/Data/Header/Highlight"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
 text = "50/25"
 vertical_alignment = 1
+
+[node name="Flex-Grow" type="VSeparator" parent="Dialogue/Spacer/Container/Data/Header"]
+texture_filter = 1
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_ipdtw")
 
 [node name="Button" type="Button" parent="Dialogue/Spacer/Container/Data/Header"]
 clip_contents = true
 layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
 toggle_mode = true
-text = "P"
+text = "Pin"
 
 [node name="DisplayName" type="Label" parent="Dialogue/Spacer/Container/Data"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Town"
 vertical_alignment = 1
 

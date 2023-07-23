@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://cuwpr2g0brgxh"]
+
+[ext_resource type="PackedScene" uid="uid://cy45synh0pre" path="res://entities/Town.tscn" id="1_6bswm"]
+[ext_resource type="Script" path="res://engine/SessionHandler.gd" id="1_yrc1e"]
+[ext_resource type="Script" path="res://entities/QuestBoard.gd" id="2_v1rf2"]
+[ext_resource type="PackedScene" uid="uid://dvf453fwcy8i0" path="res://ui/TopOverlay.tscn" id="4_ttymh"]
+
+[sub_resource type="Environment" id="Environment_30tkf"]
+background_mode = 1
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+
+[node name="WorldMap" type="Node2D" node_paths=PackedStringArray("quest_board", "settlement")]
+script = ExtResource("1_yrc1e")
+should_start_gametick = true
+quest_board = NodePath("Locations/Sunreach/QuestBoard")
+settlement = NodePath("Locations/Sunreach")
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_30tkf")
+
+[node name="WorldChunks" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Chunk1" type="TileMap" parent="WorldChunks"]
+format = 2
+
+[node name="Locations" type="Container" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sunreach" parent="Locations" instance=ExtResource("1_6bswm")]
+position = Vector2(947, 891)
+
+[node name="QuestBoard" type="Container" parent="Locations/Sunreach"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_v1rf2")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TopOverlay" parent="UI" instance=ExtResource("4_ttymh")]

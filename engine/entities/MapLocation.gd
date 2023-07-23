@@ -9,11 +9,10 @@ extends Node2D
 	get: return _position
 
 @export_group("Data")
-@export var UNITS: Array = []
+@export var units: Array = []
 
 
 var _position: Vector2i
-var _map: TileMap
 
 
 func _ready():
@@ -22,13 +21,12 @@ func _ready():
 	GameTick.connect("day_tick", _on_day_tick.bind(self))
 	GameTick.connect("night_tick", _on_night_tick.bind(self))
 	
-	_map = map
-	
-	var tile_coords: Vector2 = (_map.map_to_local(tile) * _map.scale)
-	position = Vector2(
-		tile_coords.x + _map.position.x,
-		tile_coords.y + _map.position.y
-	)
+	if not map == null:
+		var tile_coords: Vector2 = (map.map_to_local(tile) * map.scale)
+		position = Vector2(
+			tile_coords.x + map.position.x,
+			tile_coords.y + map.position.y
+		)
 
 func _on_turn_tick(_state: int, _event) -> void:
 	pass

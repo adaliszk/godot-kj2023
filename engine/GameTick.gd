@@ -12,6 +12,8 @@ var _CYCLE = -1
 var _MAX_CYCLE = 8
 var _TURN = 0
 
+var _HAS_STARTED = false
+
 const SPEED_VALUES = [INF, 2.0, 1.0, 0.5]
 enum SPEED { PAUSE, NORMAL, DOUBLE, TRIPLE }
 
@@ -33,7 +35,17 @@ func set_speed(speed: SPEED) -> void:
 	_TIMER.wait_time = SPEED_VALUES[speed]
 
 
+func get_speed() -> String:
+	var index = SPEED.values().find(_TIMER.wait_time)
+	return SPEED.keys()[index]
+
+
+func get_timeout() -> float:
+	return _TIMER.wait_time
+
+
 func start_ticks() -> void:
+	_HAS_STARTED = true
 	_TIMER.start()
 
 
@@ -44,6 +56,10 @@ func stop_ticks() -> void:
 func reset_ticks() -> void:
 	_CYCLE = 0
 	_TURN = 1
+
+
+func has_started() -> bool:
+	return _HAS_STARTED
 
 
 func tick(_event) -> void:

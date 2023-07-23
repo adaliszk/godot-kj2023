@@ -2,8 +2,10 @@ class_name Quest
 extends Node
 
 enum STATUS { WAITING, ON_ROUTE, PROGRESSING, SUCCESS, FAILURE, DONE }
+enum TYPE { HUNTING, COLLECTION, EXPLORATION, GUARDING }
 
 
+@export var type: TYPE = TYPE.EXPLORATION
 @export var issuer: MapLocation
 @export var target: MapLocation
 @export var length: int = 1
@@ -12,15 +14,23 @@ enum STATUS { WAITING, ON_ROUTE, PROGRESSING, SUCCESS, FAILURE, DONE }
 @export var state: STATUS = STATUS.WAITING
 
 
-func _init(_issuer: MapLocation, _target: MapLocation, min_danger: int, max_danger: int) -> void:
+static func type_name(variant: TYPE) -> String:
+	return TYPE.keys()[variant]
+
+
+func _init(_issuer: MapLocation, _target: MapLocation) -> void:
 	var rng = RandomNumberGenerator.new()
-	danger = rng.randi_range(min_danger, max_danger) as Rank.TIER
-	var danger_multiplier = Rank.TIER_MULTIPLIER[danger]
-	length = roundi(rng.randi_range(1, 12) * danger_multiplier) + 1
+
+	type = TYPE.values()[rng.randi_range(0, TYPE.size() - 1)]
+	length = roundi(rng.randi_range(1, 12) * Rank.multiplier(danger)) + 1
 	reward = rng.randf_range(0.1, 5) * length * danger
+
 	target = _target
 	issuer = _issuer
-	print("%s-Rank quest generated" % Rank.name(danger))
+
+	name = UUID.v4()
+
+	Log.info("Quest.new(): %s-Rank Quest(%s) has been posted!" % [ Rank.name(danger), self.name])
 
 
 func set_state(new: STATUS) -> void:

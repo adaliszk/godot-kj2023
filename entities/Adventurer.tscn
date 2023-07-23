@@ -1,75 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://dm8elmso5xr12"]
+[gd_scene load_steps=4 format=3 uid="uid://c3dwlfukhdbc0"]
 
-[ext_resource type="Script" path="res://entities/Adventurer.gd" id="1_m35ht"]
-[ext_resource type="Texture2D" uid="uid://byf0n7mvp8rle" path="res://assets/icon.svg" id="2_a104c"]
+[ext_resource type="Texture2D" uid="uid://byf0n7mvp8rle" path="res://assets/icon.svg" id="1_d1lap"]
+[ext_resource type="Script" path="res://entities/Adventurer.gd" id="1_ddsax"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdmmk"]
-size = Vector2(52, 50)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ekjjr"]
+radius = 99.0
 
 [node name="Adventurer" type="CharacterBody2D"]
-motion_mode = 1
-script = ExtResource("1_m35ht")
-
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(2.38419e-07, 0)
-scale = Vector2(0.515625, 0.507813)
-texture = ExtResource("2_a104c")
+script = ExtResource("1_ddsax")
 
 [node name="NavigationAgent" type="NavigationAgent2D" parent="."]
 path_desired_distance = 64.0
 target_desired_distance = 128.0
-path_max_distance = 64.0
-path_postprocessing = 1
-avoidance_enabled = true
-radius = 32.0
-neighbor_distance = 128.0
-max_neighbors = 3
-debug_use_custom = true
-debug_path_custom_color = Color(1, 0, 1, 1)
-debug_path_custom_point_size = 32.0
-debug_path_custom_line_width = 8.0
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 32.0
+path_max_distance = 32.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_wdmmk")
+shape = SubResource("CircleShape2D_ekjjr")
 disabled = true
 
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.460938, 0.625)
+texture = ExtResource("1_d1lap")
+
 [node name="Dialogue" type="Control" parent="."]
+visible = false
 layout_mode = 3
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -82.0
-offset_top = -116.0
-offset_right = 82.0
-offset_bottom = -26.0
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Bubble" type="PanelContainer" parent="Dialogue"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Level" type="Label" parent="Dialogue"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
 
-[node name="Data" type="VBoxContainer" parent="Dialogue/Bubble"]
-layout_mode = 2
-
-[node name="Level" type="Label" parent="Dialogue/Bubble/Data"]
-layout_mode = 2
-text = "lv0 - 0/10"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="State" type="Label" parent="Dialogue/Bubble/Data"]
-layout_mode = 2
-text = "..."
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="State" type="Label" parent="Dialogue"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr158d0oucy5q"]
+
+[ext_resource type="Script" path="res://engine/SessionHandler.gd" id="1_o8rmx"]
+[ext_resource type="PackedScene" uid="uid://dvf453fwcy8i0" path="res://ui/TopOverlay.tscn" id="2_67yao"]
+[ext_resource type="Script" path="res://scripts/QuestBoardRenderer.gd" id="2_gt253"]
+
+[node name="QuestManager" type="Container"]
+custom_minimum_size = Vector2(1024, 0)
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o8rmx")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 96
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Container" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/Container"]
+layout_mode = 2
+text = "Quest Overview"
+
+[node name="Scroller" type="ScrollContainer" parent="Panel/MarginContainer/Container"]
+custom_minimum_size = Vector2(1024, 760)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="QuestBoard" type="GridContainer" parent="Panel/MarginContainer/Container/Scroller"]
+clip_contents = true
+custom_minimum_size = Vector2(1024, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/h_separation = 64
+theme_override_constants/v_separation = 64
+columns = 3
+script = ExtResource("2_gt253")
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/Container/Scroller/QuestBoard"]
+layout_mode = 2
+text = "You have no quests yet..."
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TopOverlay" parent="UI" instance=ExtResource("2_67yao")]

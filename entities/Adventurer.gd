@@ -1,5 +1,5 @@
 class_name Adventurer
-extends CharacterBody2D
+extends Unit
 
 @export var map: TileMap
 @export var location: MapLocation
@@ -7,8 +7,8 @@ extends CharacterBody2D
 
 @onready var navigation: NavigationAgent2D = $NavigationAgent
 
-@onready var state_display: Label = $Dialogue/Bubble/Data/State
-@onready var level_display: Label = $Dialogue/Bubble/Data/Level
+@onready var state_display: Label = $Dialogue/State
+@onready var level_display: Label = $Dialogue/Level
 
 var current_quest: Quest
 @export var total_quests: int = 0
@@ -36,9 +36,9 @@ func _ready() -> void:
 
 func _init():
 	var rng := RandomNumberGenerator.new()
-	rank = 6 - rng.randi_range(0, 2) as Rank.TIER
+	rank = rng.randi_range(0, 2) as Rank.TIER
 	night_owl = rng.randi_range(0, 1) == 1
-	print("Adventurer with ", Rank.name(rank), " rank joined!")
+	Log.info("Adventurer::new(): %s rank joined!" % Rank.name(rank))
 	_update_stats()
 	hide()
 
@@ -89,7 +89,7 @@ func _update_state() -> void:
 
 
 func _update_stats() -> void:
-	var multiplier = Rank.TIER_MULTIPLIER[rank]
+	var multiplier = Rank.multiplier(rank)
 
 	max_enery = ceili(10 * multiplier)
 	rankup_limit = ceili(100 * multiplier)
@@ -111,7 +111,9 @@ func _physics_process(_delta):
 	velocity = Vector2.ZERO
 	if can_move and not navigation.is_target_reached():
 		next_route = to_local(navigation.get_next_path_position()).normalized()
-		velocity = next_route * movement_speed
+		var game_speed: float = GameTick.get_timeout()
+		game_speed = 0.0 if game_speed == INF else (1/game_speed)
+		velocity = next_route * (movement_speed * game_speed)
 		move_and_slide()
 
 

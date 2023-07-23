@@ -1,43 +1,63 @@
-[gd_scene load_steps=4 format=3 uid="uid://dngomgyqmylrb"]
+[gd_scene load_steps=6 format=3 uid="uid://dngomgyqmylrb"]
 
-[ext_resource type="Script" path="res://ui/scripts/data/GameName.gd" id="1_f1g4l"]
-[ext_resource type="Script" path="res://ui/scripts/data/GitHash.gd" id="2_hh8jp"]
-[ext_resource type="Script" path="res://ui/scripts/data/GamePerformance.gd" id="2_t6a8r"]
+[ext_resource type="Script" path="res://ui/scripts/GameName.gd" id="1_f1g4l"]
+[ext_resource type="FontFile" uid="uid://dvp0ktm43pqnc" path="res://ui/assets/Kenney Pixel.ttf" id="1_wucmx"]
+[ext_resource type="Script" path="res://ui/scripts/GitHash.gd" id="2_hh8jp"]
+[ext_resource type="Script" path="res://ui/scripts/GamePerformance.gd" id="2_t6a8r"]
+
+[sub_resource type="Theme" id="Theme_ogckg"]
+default_font = ExtResource("1_wucmx")
+default_font_size = 32
 
 [node name="BottomOverlay" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+theme = SubResource("Theme_ogckg")
 
-[node name="Spacing" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -10.0
+offset_top = -44.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 32
 
-[node name="Container" type="HBoxContainer" parent="Spacing"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-alignment = 2
 
-[node name="DebugInfo" type="Label" parent="Spacing/Container"]
+[node name="DebugInfo" type="Label" parent="MarginContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "{debug_Info}"
 script = ExtResource("2_t6a8r")
 
-[node name="GameName" type="Label" parent="Spacing/Container"]
+[node name="GameName" type="Label" parent="MarginContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "{game_name}"
 script = ExtResource("1_f1g4l")
 
-[node name="GameVersion" type="Label" parent="Spacing/Container"]
+[node name="GameVersion" type="Label" parent="MarginContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "{game_version}"
 script = ExtResource("2_hh8jp")

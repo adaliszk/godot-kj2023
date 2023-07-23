@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bidprphmkbjgc"]
 
-[ext_resource type="Script" path="res://tests/WorldSimulation.gd" id="1_f4t8d"]
+[ext_resource type="Script" path="res://prototype/WorldSimulation.gd" id="1_f4t8d"]
 [ext_resource type="TileSet" uid="uid://bhdpbp0t56fr6" path="res://assets/tilemaps/inputs.tres" id="2_g8hv1"]
 [ext_resource type="PackedScene" uid="uid://dvf453fwcy8i0" path="res://ui/TopOverlay.tscn" id="3_fn6uh"]
 [ext_resource type="PackedScene" uid="uid://cy45synh0pre" path="res://entities/Town.tscn" id="3_ukgce"]
@@ -16,10 +16,11 @@ texture_filter = 1
 position = Vector2(0, 256)
 scale = Vector2(8, 8)
 tile_set = ExtResource("2_g8hv1")
+navigation_visibility_mode = 1
 format = 2
 layer_0/name = "Locations"
 layer_0/z_index = 5
-layer_0/tile_data = PackedInt32Array(131074, 458753, 5, 131077, 458753, 5, 131080, 458753, 5, 327680, 262145, 2, 327681, 262145, 2, 262144, 262145, 2, 10, 262145, 2, 65546, 262145, 2, 9, 262145, 2, 8, 262145, 2, 262150, 327681, 2, 3, 655361, 7, 196617, 393217, 8, 131081, 393217, 8, 65545, 393217, 8, 196621, 524289, 8, 131085, 524289, 7, 393217, 262145, 2, 393218, 262145, 2, 393216, 262145, 2, 458751, 262145, 2, 393215, 262145, 2, 327679, 262145, 2, 458752, 262145, 2, 65547, 262145, 2, 131083, 262145, 2, 196619, 262145, 2, 262155, 262145, 2, 327691, 262145, 2, 327692, 262145, 2, 262156, 262145, 2, 196620, 262145, 2, 131084, 262145, 2, 65548, 262145, 2, 12, 262145, 2, 11, 262145, 2, 65540, 262145, 2, 131076, 262145, 2, 196611, 262145, 2, 196612, 262145, 2, 196613, 262145, 2, 196614, 262145, 2, 131075, 262145, 2, 65539, 262145, 2, 65541, 262145, 2, 5, 262145, 2, 4, 262145, 2, 327686, 327681, 2, 327685, 327681, 2)
+layer_0/tile_data = PackedInt32Array(131077, 458753, 5, 131080, 458753, 5, 327680, 262145, 2, 327681, 262145, 2, 262144, 262145, 2, 10, 262145, 2, 65546, 262145, 2, 9, 262145, 2, 8, 262145, 2, 262150, 327681, 2, 3, 655361, 7, 196617, 393217, 8, 131081, 393217, 8, 65545, 393217, 8, 196621, 524289, 8, 131085, 524289, 7, 393217, 262145, 2, 393218, 262145, 2, 393216, 262145, 2, 458751, 262145, 2, 393215, 262145, 2, 327679, 262145, 2, 458752, 262145, 2, 65547, 262145, 2, 131083, 262145, 2, 196619, 262145, 2, 262155, 262145, 2, 327691, 262145, 2, 327692, 262145, 2, 262156, 262145, 2, 196620, 262145, 2, 131084, 262145, 2, 65548, 262145, 2, 12, 262145, 2, 11, 262145, 2, 65540, 262145, 2, 131076, 262145, 2, 196611, 262145, 2, 196612, 262145, 2, 196613, 262145, 2, 196614, 262145, 2, 131075, 262145, 2, 65539, 262145, 2, 65541, 262145, 2, 5, 262145, 2, 4, 262145, 2, 327686, 327681, 2, 327685, 327681, 2, 131074, 458753, 5)
 layer_1/name = "Roads"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -107,17 +108,12 @@ tile = Vector2i(1, 5)
 [node name="ResouceNode8" parent="TileData" node_paths=PackedStringArray("map") instance=ExtResource("4_sd2c0")]
 z_index = 9
 y_sort_enabled = true
+position = Vector2(320, 577)
 map = NodePath("../../TileMap")
 tile = Vector2i(13, 3)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="BottomOverlay" parent="UI" instance=ExtResource("4_eto7r")]
-anchors_preset = 12
-anchor_top = 1.0
-grow_vertical = 0
 
 [node name="TopOverlay" parent="UI" instance=ExtResource("3_fn6uh")]
-anchors_preset = 10
-anchor_bottom = 0.0
-grow_vertical = 1

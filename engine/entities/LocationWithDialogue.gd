@@ -4,33 +4,30 @@ extends MapLocation
 @export var pinned: bool = false
 
 
-func _ready():
-	super._ready()
+func _ready() -> void:
 	close()
 
 
-func open():
+func open() -> void:
 	_update_dialogue()
 	$Dialogue.show()
 
 
-func close():
+func close() -> void:
 	if pinned:
 		return
 	$Dialogue.hide()
 
 
-func set_pinned(state):
+func set_pinned(state) -> void:
 	pinned = state
 
 
 func _on_focus() -> void:
-	super._on_focus()
 	open()
 
 
 func _on_blur() -> void:
-	super._on_blur()
 	close()
 
 

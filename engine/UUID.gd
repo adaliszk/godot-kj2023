@@ -1,11 +1,12 @@
 #
 # COPIED FROM: https://github.com/binogure-studio/godot-uuid
 #
-
 class_name UUID
 extends Node
 
 const BYTE_MASK: int = 0b11111111
+
+var _uuid: Array
 
 
 static func uuidbin():
@@ -117,9 +118,6 @@ static func v4_rng(rng: RandomNumberGenerator):
 	)
 
 
-var _uuid: Array
-
-
 func _init(rng := RandomNumberGenerator.new()) -> void:
 	_uuid = uuidbinrng(rng)
 
@@ -145,22 +143,22 @@ func as_dict(big_endian := true) -> Dictionary:
 				+ _uuid[15]
 			)
 		}
-	else:
-		return {
-			"low": _uuid[0] + (_uuid[1] << 8) + (_uuid[2] << 16) + (_uuid[3] << 24),
-			"mid": _uuid[4] + (_uuid[5] << 8),
-			"hi": _uuid[6] + (_uuid[7] << 8),
-			"clock": _uuid[8] + (_uuid[9] << 8),
-			"node":
-			(
-				_uuid[10]
-				+ (_uuid[11] << 8)
-				+ (_uuid[12] << 16)
-				+ (_uuid[13] << 24)
-				+ (_uuid[14] << 32)
-				+ (_uuid[15] << 40)
-			)
-		}
+
+	return {
+		"low": _uuid[0] + (_uuid[1] << 8) + (_uuid[2] << 16) + (_uuid[3] << 24),
+		"mid": _uuid[4] + (_uuid[5] << 8),
+		"hi": _uuid[6] + (_uuid[7] << 8),
+		"clock": _uuid[8] + (_uuid[9] << 8),
+		"node":
+		(
+			_uuid[10]
+			+ (_uuid[11] << 8)
+			+ (_uuid[12] << 16)
+			+ (_uuid[13] << 24)
+			+ (_uuid[14] << 32)
+			+ (_uuid[15] << 40)
+		)
+	}
 
 
 func as_string() -> String:

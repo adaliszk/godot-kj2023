@@ -1,7 +1,7 @@
 class_name Rank
 
-const MULTIPLIER = [0.1, 0.25, 0.5, 1.0, 2.0, 3.0, 6.0]
 enum TIER { F, E, D, C, B, A, S }
+const MULTIPLIER = [0.1, 0.25, 0.5, 1.0, 2.0, 3.0, 6.0]
 
 
 static func multiplier(tier: TIER) -> float:

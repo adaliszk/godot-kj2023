@@ -1,12 +1,12 @@
 extends Node
 
+signal logged(message: String)
+
 enum LEVEL { VERBOSE, DEBUG, INFO, WARN, ERROR, FATAL }
 
 @export var level: LEVEL = LEVEL.DEBUG
 @export var messages: Array = []
 @export var memory: int = 100
-
-signal logged(message: String)
 
 
 func _init() -> void:

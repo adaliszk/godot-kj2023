@@ -3,26 +3,28 @@ extends Node
 
 @export var menu_container: Control
 @export var start_button: Button
-
 @export var view_switcher: TabBar
 @export var view_container: Node
-
-var _is_started = false
 @export var is_started: bool:
 	get:
 		return _is_started
 	set(value):
-		start() if value else pause()
+		if value:
+			start()
+		else:
+			pause()
 
 var views: Array = []
+
+var _is_started = false
 
 
 func _ready() -> void:
 	start_button.connect("pressed", _on_start_pressed.bind(self))
 	view_switcher.connect("tab_changed", _on_view_changed.bind(self))
-	#view_switcher.set_tab_hidden(1, true)
-	#view_switcher.set_tab_hidden(2, true)
-	#view_switcher.set_tab_hidden(3, true)
+	view_switcher.set_tab_hidden(1, true)
+	view_switcher.set_tab_hidden(2, true)
+	view_switcher.set_tab_hidden(3, true)
 
 	views = [menu_container]
 
@@ -33,7 +35,10 @@ func _ready() -> void:
 
 func _on_view_changed(index: int, _event) -> void:
 	Log.info("Main::on_view_changed(): %s" % index)
-	pause() if index == 0 else start()
+	if index == 0:
+		start()
+	else:
+		pause()
 
 	views[2].hide()
 	views[3].hide()

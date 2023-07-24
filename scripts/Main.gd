@@ -9,7 +9,8 @@ extends Node
 
 var _is_started = false
 @export var is_started: bool:
-	get: return _is_started
+	get:
+		return _is_started
 	set(value):
 		start() if value else pause()
 
@@ -48,7 +49,7 @@ func _input(event) -> void:
 		pause()
 
 
-func start() -> void: 
+func start() -> void:
 	start_button.text = "  Continue"
 	menu_container.hide()
 
@@ -70,7 +71,7 @@ func start() -> void:
 		view3.update_session()
 		views.append(view3)
 		view3.hide()
-				
+
 		view_switcher.set_tab_hidden(1, false)
 		view_switcher.set_tab_hidden(2, false)
 		view_switcher.set_tab_hidden(3, false)
@@ -79,8 +80,6 @@ func start() -> void:
 		_is_started = true
 
 
-
 func pause() -> void:
 	view_switcher.current_tab = 0
 	GameTick.stop_ticks()
-

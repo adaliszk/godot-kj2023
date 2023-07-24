@@ -5,12 +5,12 @@ enum TIER { F, E, D, C, B, A, S }
 
 
 static func multiplier(tier: TIER) -> float:
-    return MULTIPLIER[tier]
+	return MULTIPLIER[tier]
 
 
 static func probablity(tier: TIER) -> float:
-    return 1 / MULTIPLIER[tier]
+	return 1 / MULTIPLIER[tier]
 
 
 static func name(tier: TIER) -> String:
-    return TIER.keys()[tier]
+	return TIER.keys()[tier]

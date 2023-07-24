@@ -66,13 +66,7 @@ func _on_day_tick(_state: int, _event) -> void:
 func _update_state() -> void:
 	level_display.text = (
 		"%s-Rank Q(%s/%s) E(%s/%s)"
-		% [
-			Rank.name(rank),
-			rankup_limit,
-			rank_quests,
-			max_enery,
-			energy
-		]
+		% [Rank.name(rank), rankup_limit, rank_quests, max_enery, energy]
 	)
 
 	state_display.text = "zZz"
@@ -112,7 +106,7 @@ func _physics_process(_delta):
 	if can_move and not navigation.is_target_reached():
 		next_route = to_local(navigation.get_next_path_position()).normalized()
 		var game_speed: float = GameTick.get_timeout()
-		game_speed = 0.0 if game_speed == INF else (1/game_speed)
+		game_speed = 0.0 if game_speed == INF else (1 / game_speed)
 		velocity = next_route * (movement_speed * game_speed)
 		move_and_slide()
 
@@ -125,13 +119,11 @@ func pick_quest() -> void:
 		func(q): return q.danger <= rank and q.danger >= rank - 2
 	)
 
-	available.sort_custom(
-		func(a, b): return a.reward > b.reward
-	)
+	available.sort_custom(func(a, b): return a.reward > b.reward)
 
 	if len(available) == 0:
 		return
-	
+
 	var quest_candidate = available.pop_front()
 	while len(available) > 0:
 		if quest_candidate.length > max_enery:

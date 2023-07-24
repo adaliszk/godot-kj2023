@@ -14,7 +14,6 @@ func _on_session(_event) -> void:
 
 
 func _on_population_changed(_event):
-	text = "%s/%s" % [
-		GameSession.settlement.populationMax,
-		GameSession.settlement.populationCurrent
-	]
+	text = (
+		"%s/%s" % [GameSession.settlement.populationMax, GameSession.settlement.populationCurrent]
+	)

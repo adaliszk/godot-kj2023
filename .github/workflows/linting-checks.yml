@@ -1,0 +1,60 @@
+name: Linting Checks
+
+on:
+  workflow_dispatch: {}
+  pull_request: {}
+  push:
+    branches:
+      - develop
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  lint-project-integrity:
+    name: Check integrity on ${{ matrix.os }} with Godot ${{ matrix.godot_version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        godot_version: [ '4.1.0', '4.1.1' ]
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      -
+        name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ matrix.godot_version }}
+          use-dotnet: false
+      -
+        name: Import files
+        run: godot --editor --headless --quit --quiet
+
+  lint-gdscript:
+    name: Lint GDScript files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        check_path: [ 'engine', 'entities', 'scenes', 'scripts', 'types', 'ui' ]
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      -
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      -
+        name: Install Godot Tools
+        run: pip install gdtoolkit
+      -
+        name: Lint files
+        run: gdlint ${{ matrix.check_path }}

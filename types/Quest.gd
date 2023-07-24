@@ -4,7 +4,6 @@ extends Node
 enum STATUS { WAITING, ON_ROUTE, PROGRESSING, SUCCESS, FAILURE, DONE }
 enum TYPE { HUNTING, COLLECTION, EXPLORATION, GUARDING }
 
-
 @export var type: TYPE = TYPE.EXPLORATION
 @export var issuer: MapLocation
 @export var target: MapLocation
@@ -30,7 +29,7 @@ func _init(_issuer: MapLocation, _target: MapLocation) -> void:
 
 	name = UUID.v4()
 
-	Log.info("Quest.new(): %s-Rank Quest(%s) has been posted!" % [ Rank.name(danger), self.name])
+	Log.info("Quest.new(): %s-Rank Quest(%s) has been posted!" % [Rank.name(danger), self.name])
 
 
 func set_state(new: STATUS) -> void:

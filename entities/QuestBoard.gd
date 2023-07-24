@@ -29,7 +29,8 @@ signal board_updated
 
 # Calculated states
 @export var questsCompleted: int:
-	get: return questsDelivered + questsFailed
+	get:
+		return questsDelivered + questsFailed
 
 
 func _ready() -> void:
@@ -49,7 +50,12 @@ func _on_game_tick(_cycle: int, _event) -> void:
 func _on_unit_spawned(unit: Adventurer, _event) -> void:
 	Log.debug("QuestManager::on_unit_spawned()")
 	if unit.rank > maxDanger:
-		Log.info("QuestBoard:on_unit_spawned(): Possible quest difficulty raised to %s!" % Rank.name(unit.rank))
+		Log.info(
+			(
+				"QuestBoard:on_unit_spawned(): Possible quest difficulty raised to %s!"
+				% Rank.name(unit.rank)
+			)
+		)
 		maxDanger = unit.rank
 
 
@@ -62,14 +68,16 @@ func generate(amount: int = 1) -> void:
 		var poiList = []
 		for poi in availablePOIs.get_children():
 			poiList.append(poi)
-		
+
 		var target = poiList.pick_random()
 		var quest = Quest.new(settlement, target)
 
 		var danger = rng.randi_range(minDanger, maxDanger)
 		var dangerMultiplier = Rank.multiplier(danger)
 
-		quest.length = roundi(rng.randi_range(minQuestLength, maxQuestLength) * dangerMultiplier) + 1
+		quest.length = (
+			roundi(rng.randi_range(minQuestLength, maxQuestLength) * dangerMultiplier) + 1
+		)
 		quest.reward = round(rng.randf_range(minReward, maxReward) * dangerMultiplier)
 		quest.danger = danger
 

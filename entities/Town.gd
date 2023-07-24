@@ -4,7 +4,6 @@ extends LocationWithDialogue
 signal population_changed
 signal unit_spawned(unit: Node)
 
-
 @export var debug_info: RichTextLabel
 @export var population_label: Label
 @export var display_name: Label

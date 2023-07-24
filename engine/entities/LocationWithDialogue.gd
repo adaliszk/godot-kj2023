@@ -1,7 +1,6 @@
 class_name LocationWithDialogue
 extends MapLocation
 
-
 @export var pinned: bool = false
 
 
@@ -16,7 +15,8 @@ func open():
 
 
 func close():
-	if pinned: return
+	if pinned:
+		return
 	$Dialogue.hide()
 
 

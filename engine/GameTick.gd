@@ -57,7 +57,7 @@ func reset_ticks() -> void:
 
 
 func has_started() -> bool:
-	return _HAS_STARTED
+	return _has_started
 
 
 func tick(_event) -> void:

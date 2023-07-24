@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dngomgyqmylrb"]
 
 [ext_resource type="Script" path="res://ui/scripts/GameName.gd" id="1_f1g4l"]
-[ext_resource type="FontFile" uid="uid://dvp0ktm43pqnc" path="res://ui/assets/Kenney Pixel.ttf" id="1_wucmx"]
+[ext_resource type="FontFile" uid="uid://dvp0ktm43pqnc" path="res://ui/assets/fonts/kenney_pixel.ttf" id="1_wucmx"]
 [ext_resource type="Script" path="res://ui/scripts/GitHash.gd" id="2_hh8jp"]
 [ext_resource type="Script" path="res://ui/scripts/GamePerformance.gd" id="2_t6a8r"]
 

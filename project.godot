@@ -37,7 +37,7 @@ version_control/autoload_on_startup=true
 [gui]
 
 theme/default_theme_scale=3.0
-theme/custom_font="res://ui/assets/Kenney Pixel.ttf"
+theme/custom_font="res://ui/assets/fonts/kenney_pixel.ttf"
 
 [input]
 

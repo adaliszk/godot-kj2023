@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbfc8mm4bsu0p"]
+[gd_scene load_steps=7 format=3 uid="uid://dbfc8mm4bsu0p"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_astru"]
 [ext_resource type="PackedScene" uid="uid://dngomgyqmylrb" path="res://ui/BottomOverlay.tscn" id="2_0qj1h"]
+[ext_resource type="AudioStream" uid="uid://cfjsc8sgxcy5s" path="res://music/Reminiscing.ogg" id="2_rdpug"]
 [ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/Kenney Pixel Square.ttf" id="3_io7cr"]
 [ext_resource type="Script" path="res://ui/scripts/ExitAction.gd" id="4_u5nos"]
 
@@ -13,11 +14,19 @@ script = ExtResource("1_astru")
 menu_container = NodePath("OverlayUI/Menu")
 start_button = NodePath("OverlayUI/Menu/Container/MainMenu/Start")
 view_switcher = NodePath("OverlayUI/ScreenContainer/ScreenSwitcher")
-view_container = NodePath("Content/Container")
+view_container = NodePath("ViewportContent/Container")
 
-[node name="Content" type="CanvasLayer" parent="."]
+[node name="SoundChannels" type="Container" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="Container" type="Control" parent="Content"]
+[node name="Music" type="AudioStreamPlayer" parent="SoundChannels"]
+stream = ExtResource("2_rdpug")
+autoplay = true
+
+[node name="ViewportContent" type="CanvasLayer" parent="."]
+
+[node name="Container" type="Control" parent="ViewportContent"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -8,12 +8,12 @@ signal day_tick(state: int)
 enum SPEED { PAUSE, NORMAL, DOUBLE, TRIPLE }
 const SPEED_VALUES = [INF, 2.0, 1.0, 0.5]
 
+var _has_started = false
 var _timer: Timer
 var _cycle = -1
 var _max_cycle = 8
 var _turn = 0
 
-var _HAS_STARTED = false
 
 
 func _ready() -> void:
@@ -43,7 +43,7 @@ func get_timeout() -> float:
 
 
 func start_ticks() -> void:
-	_HAS_STARTED = true
+	_has_started = true
 	_timer.start()
 
 

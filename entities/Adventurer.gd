@@ -4,29 +4,22 @@ extends Unit
 @export var map: TileMap
 @export var location: MapLocation
 @export var rank: Rank.TIER
-
-@onready var navigation: NavigationAgent2D = $NavigationAgent
-
-@onready var state_display: Label = $Dialogue/State
-@onready var level_display: Label = $Dialogue/Level
-
-var current_quest: Quest
 @export var total_quests: int = 0
-
 @export var rankup_limit: int = 100
 @export var rank_quests: int = 0
-
 @export var max_enery: int = 20
 @export var energy: int = 1
-
 @export var can_move: bool = false
 @export var movement_speed: float = 200
 @export var next_route: Vector2
-
 @export var work_length: int = 0
 @export var work_state: int = 0
 
-@export var night_owl: bool = false
+var current_quest: Quest
+
+@onready var navigation: NavigationAgent2D = $NavigationAgent
+@onready var state_display: Label = $Dialogue/State
+@onready var level_display: Label = $Dialogue/Level
 
 
 func _ready() -> void:
@@ -37,7 +30,6 @@ func _ready() -> void:
 func _init():
 	var rng := RandomNumberGenerator.new()
 	rank = rng.randi_range(0, 2) as Rank.TIER
-	night_owl = rng.randi_range(0, 1) == 1
 	Log.info("Adventurer::new(): %s rank joined!" % Rank.name(rank))
 	_update_stats()
 	hide()
@@ -48,7 +40,6 @@ func set_map_location(poi: MapLocation) -> void:
 
 
 func _on_night_tick(_state: int, _event) -> void:
-	can_move = false if not night_owl else true
 	_update_stats()
 	_update_state()
 
@@ -136,55 +127,7 @@ func pick_quest() -> void:
 
 
 func advance_quest() -> void:
-	can_move = false
-	if not (current_quest is Quest) or energy <= 0:
-		energy = energy + 1
-		return
-
-	if navigation.is_target_reached():
-		if current_quest.state == Quest.STATUS.SUCCESS:
-			total_quests = total_quests + 1
-			rank_quests = rank_quests + 1
-			location = current_quest.issuer
-			location.quest_done(current_quest)
-			current_quest = null
-			work_state = 0
-			hide()
-			return
-
-		if current_quest.state == Quest.STATUS.ON_ROUTE:
-			current_quest.set_state(Quest.STATUS.PROGRESSING)
-			show()
-			return
-
-	if current_quest.state == Quest.STATUS.WAITING:
-		work_length = current_quest.length
-		current_quest.set_state(Quest.STATUS.ON_ROUTE)
-		plan_route(current_quest.target)
-		show()
-		return
-
-	if current_quest.state == Quest.STATUS.PROGRESSING:
-		if work_state >= work_length:
-			current_quest.set_state(Quest.STATUS.SUCCESS)
-			plan_route(current_quest.issuer)
-			show()
-			return
-
-		if energy <= 0:
-			current_quest.set_state(Quest.STATUS.FAILURE)
-			plan_route(current_quest.issuer)
-			show()
-			return
-
-		location = current_quest.target
-		work_state = work_state + 1
-		energy = energy - 1
-		return
-
-	can_move = true
-	location = null
-	show()
+	pass  # TODO
 
 
 func plan_route(target: MapLocation) -> void:

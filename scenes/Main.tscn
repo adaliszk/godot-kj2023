@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbfc8mm4bsu0p"]
+[gd_scene load_steps=6 format=3 uid="uid://dbfc8mm4bsu0p"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_astru"]
 [ext_resource type="PackedScene" uid="uid://dngomgyqmylrb" path="res://ui/BottomOverlay.tscn" id="2_0qj1h"]
 [ext_resource type="AudioStream" uid="uid://cfjsc8sgxcy5s" path="res://music/Reminiscing.ogg" id="2_rdpug"]
-[ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/Kenney Pixel Square.ttf" id="3_io7cr"]
 [ext_resource type="Script" path="res://ui/scripts/ExitAction.gd" id="4_u5nos"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a1gph"]
@@ -95,7 +94,6 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_io7cr")
 theme_override_font_sizes/font_size = 48
 text = "Sunreach
 Frontier"

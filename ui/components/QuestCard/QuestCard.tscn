@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://ui/components/QuestCard/QuestCard.gd" id="1_ggmoe"]
 [ext_resource type="Texture2D" uid="uid://r1gee5s21xkd" path="res://ui/assets/ancient/tan_inlay.png" id="1_idceb"]
 [ext_resource type="Theme" uid="uid://buogym61chq45" path="res://ui/assets/KenneyBlock.tres" id="3_uk1n5"]
-[ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/Kenney Pixel Square.ttf" id="4_3q1wx"]
+[ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/fonts/kenney_pixel_square.ttf" id="4_mt8qj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3dtju"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5mw6"]
 
 [sub_resource type="Theme" id="Theme_oxfa8"]
-default_font = ExtResource("4_3q1wx")
+default_font = ExtResource("4_mt8qj")
 default_font_size = 16
 
 [node name="QuestCard" type="NinePatchRect" node_paths=PackedStringArray("type_label", "rank_label", "location_label", "effort_label", "reward_label", "status_label")]

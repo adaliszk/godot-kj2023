@@ -4,13 +4,12 @@ extends LocationWithDialogue
 signal population_changed
 signal unit_spawned(unit: Node)
 
-
 @export var debug_info: RichTextLabel
 @export var population_label: Label
 @export var display_name: Label
 
-@export var populationMax: int = 20
-@export var populationCurrent: int = 0
+@export var max_population: int = 20
+@export var current_population: int = 0
 
 
 func _ready() -> void:
@@ -19,7 +18,7 @@ func _ready() -> void:
 
 
 func update_popover():
-	population_label.text = "%s/%s" % [populationMax, populationCurrent]
+	population_label.text = "%s/%s" % [max_population, current_population]
 	display_name.text = name
 
 
@@ -27,7 +26,7 @@ func spawn_unit() -> void:
 	var new_unit = (preload("res://entities/Adventurer.tscn")).instantiate()
 	new_unit.position = position
 	get_parent().find_child(name).add_child(new_unit)
-	populationCurrent += 1
+	current_population += 1
 	update_popover()
 
 	emit_signal("unit_spawned", new_unit)

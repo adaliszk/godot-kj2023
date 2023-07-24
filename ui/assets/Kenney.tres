@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://ckonta6jqjxc3"]
 
-[ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/Kenney Pixel Square.ttf" id="1_qjsck"]
+[ext_resource type="FontFile" uid="uid://dtfg2a2v22mmm" path="res://ui/assets/fonts/kenney_pixel_square.ttf" id="1_qjsck"]
 
 [resource]
 default_font = ExtResource("1_qjsck")

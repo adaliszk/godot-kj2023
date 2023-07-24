@@ -14,8 +14,11 @@ func _on_session(_event) -> void:
 
 
 func _on_quests_changed(_event):
-	text = "%s/%s/%s" % [
-        GameSession.quest_board.maxQuests,
-		GameSession.quest_board.quests.size(),
-		GameSession.quest_board.questsCompleted
-	]
+	text = (
+		"%s/%s/%s"
+		% [
+			GameSession.quest_board.maxQuests,
+			GameSession.quest_board.quests.size(),
+			GameSession.quest_board.questsCompleted
+		]
+	)

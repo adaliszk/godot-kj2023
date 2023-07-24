@@ -1,6 +1,5 @@
 extends GridContainer
 
-
 var quest_card = preload("res://ui/components/QuestCard/QuestCard.tscn")
 
 
@@ -8,7 +7,7 @@ func _ready() -> void:
 	GameSession.connect("quest_board_connected", _on_board_connected.bind(self))
 	if GameSession.quest_board:
 		_on_board_connected(null)
-	
+
 
 func _on_board_connected(_event) -> void:
 	GameSession.quest_board.connect("board_updated", _on_board_updated.bind(self))

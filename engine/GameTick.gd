@@ -5,92 +5,90 @@ signal turn_tick(state: int)
 signal night_tick(state: int)
 signal day_tick(state: int)
 
-
-var _TIMER : Timer
-
-var _CYCLE = -1
-var _MAX_CYCLE = 8
-var _TURN = 0
-
-var _HAS_STARTED = false
-
-const SPEED_VALUES = [INF, 2.0, 1.0, 0.5]
 enum SPEED { PAUSE, NORMAL, DOUBLE, TRIPLE }
+const SPEED_VALUES = [INF, 2.0, 1.0, 0.5]
+
+var _has_started = false
+var _timer: Timer
+var _cycle = -1
+var _max_cycle = 8
+var _turn = 0
+
 
 
 func _ready() -> void:
 	connect("cycle_tick", _on_cycle_tick.bind(self))
 	connect("turn_tick", _on_turn_tick.bind(self))
-	
-	emit_signal("cycle_tick", _CYCLE +1)
-	emit_signal("turn_tick", _TURN +1)
-	
-	_TIMER = Timer.new()
-	_TIMER.connect("timeout", tick.bind(self))
+
+	emit_signal("cycle_tick", _cycle + 1)
+	emit_signal("turn_tick", _turn + 1)
+
+	_timer = Timer.new()
+	_timer.connect("timeout", tick.bind(self))
 	set_speed(SPEED.NORMAL)
-	add_child(_TIMER)
+	add_child(_timer)
 
 
 func set_speed(speed: SPEED) -> void:
-	_TIMER.wait_time = SPEED_VALUES[speed]
+	_timer.wait_time = SPEED_VALUES[speed]
 
 
 func get_speed() -> String:
-	var index = SPEED.values().find(_TIMER.wait_time)
+	var index = SPEED.values().find(_timer.wait_time)
 	return SPEED.keys()[index]
 
 
 func get_timeout() -> float:
-	return _TIMER.wait_time
+	return _timer.wait_time
 
 
 func start_ticks() -> void:
-	_HAS_STARTED = true
-	_TIMER.start()
+	_has_started = true
+	_timer.start()
 
 
 func stop_ticks() -> void:
-	_TIMER.stop()
+	_timer.stop()
 
 
 func reset_ticks() -> void:
-	_CYCLE = 0
-	_TURN = 1
+	_cycle = 0
+	_turn = 1
 
 
 func has_started() -> bool:
-	return _HAS_STARTED
+	return _has_started
 
 
 func tick(_event) -> void:
-	emit_signal("cycle_tick", _CYCLE +1)
+	emit_signal("cycle_tick", _cycle + 1)
 
 
 func get_turn() -> int:
-	return _TURN
+	return _turn
 
 
 func get_cycle() -> int:
-	return _CYCLE
+	return _cycle
 
 
 func get_max_cycle() -> int:
-	return _MAX_CYCLE
+	return _max_cycle
 
 
 func _on_turn_tick(_state: int, _event) -> void:
-	_TURN = _TURN + 1
-	_CYCLE = 0
+	_turn = _turn + 1
+	_cycle = 0
 
 
 func _on_cycle_tick(_state: int, _event) -> void:
-	_CYCLE = _state
+	_cycle = _state
 
-	if _state > _MAX_CYCLE:
-		emit_signal("turn_tick", _TURN)
-	
+	if _state > _max_cycle:
+		emit_signal("turn_tick", _turn)
+
 	if _state < 7:
-		emit_signal("day_tick", _TURN + _CYCLE)
+		emit_signal("day_tick", _turn + _cycle)
 		return
-	
-	emit_signal("night_tick", _TURN + (_CYCLE - 7))
+
+	emit_signal("night_tick", _turn + (_cycle - 7))

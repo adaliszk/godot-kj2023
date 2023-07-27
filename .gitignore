@@ -7,4 +7,4 @@
 addons
 builds
 
-GIT_HASH.txt
+git_version.txt

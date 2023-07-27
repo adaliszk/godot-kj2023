@@ -1,0 +1,20 @@
+{
+    "dirs": [
+        "res://engine",
+        "res://modules",
+        "res://ui"
+    ],
+    "double_strategy": "partial",
+    "ignore_pause": false,
+    "include_subdirs": true,
+    "inner_class": null,
+    "log_level": 3,
+    "opacity": 100,
+    "prefix": "",
+    "selected": null,
+    "should_exit": true,
+    "should_maximize": true,
+    "suffix": ".spec.gd",
+    "tests": [],
+    "unit_test_name": ""
+}

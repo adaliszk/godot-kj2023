@@ -194,3 +194,8 @@ func is_equal(other) -> bool:
 	# Godot Engine compares Array recursively
 	# There's no need for custom comparison here.
 	return _uuid == other._uuid
+
+
+static func short(id: String) -> String:
+	return id.split("-")[0]
+

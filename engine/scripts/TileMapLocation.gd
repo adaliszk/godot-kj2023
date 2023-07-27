@@ -6,6 +6,7 @@ var map: TileMap
 
 
 func _ready():
+	map = get_parent() if get_parent() is TileMap else null
 	GameTick.connect("cycle_tick", _on_cycle_tick.bind(self))
 	GameTick.connect("turn_tick", _on_turn_tick.bind(self))
 
@@ -13,6 +14,7 @@ func _ready():
 func _physics_process(_delta):
 	if Engine.is_editor_hint() and map:
 		position = map.map_to_local(map.local_to_map(position))
+	# pass
 
 
 func _enter_tree():
@@ -27,7 +29,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 
-func _on_cycle_tick(_cycle: int, _event):
+func _on_cycle_tick(_cycle: int, _type: GameTick.CycleType, _event):
 	pass
 
 

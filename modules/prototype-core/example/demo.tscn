@@ -1,0 +1,249 @@
+[gd_scene load_steps=12 format=3 uid="uid://bs6avugvfhxdx"]
+
+[ext_resource type="Script" path="res://modules/prototype-core/example/demo.gd" id="1_02vh7"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/Settlement.gd" id="2_egkfq"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/QuestBoard.gd" id="2_i7lf4"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/Unit.gd" id="3_6oc8d"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/Tavern.gd" id="4_vv8j4"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/QuestSpawner.gd" id="5_5ryou"]
+[ext_resource type="Script" path="res://modules/prototype-core/entities/Location.gd" id="5_qvbxl"]
+[ext_resource type="PackedScene" uid="uid://dehmbmk4b3n6q" path="res://ui/components/GameReleaseOverlay/GameReleaseOverlay.tscn" id="8_7pu6u"]
+
+[sub_resource type="TileSet" id="TileSet_f5myp"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_fxaya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_duk27"]
+
+[node name="Demo" type="Node2D" node_paths=PackedStringArray("quest_board", "settlement", "turn_state", "money_state", "quest_state", "unit_state", "quest_list", "unit_list")]
+script = ExtResource("1_02vh7")
+quest_board = NodePath("TileMap/Location1/QuestBoard")
+settlement = NodePath("TileMap/Location1")
+turn_state = NodePath("CanvasLayer/MarginContainer/VBoxContainer/GameSession/TurnState")
+money_state = NodePath("CanvasLayer/MarginContainer/VBoxContainer/GameSession/MoneyState")
+quest_state = NodePath("CanvasLayer/MarginContainer/VBoxContainer/GameSession/QuestState")
+unit_state = NodePath("CanvasLayer/MarginContainer/VBoxContainer/GameSession/UnitState")
+quest_list = NodePath("CanvasLayer/MarginContainer/VBoxContainer/QuestState/QuestList")
+unit_list = NodePath("CanvasLayer/MarginContainer/VBoxContainer/QuestState/UnitList")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_f5myp")
+format = 2
+
+[node name="Location1" type="Sprite2D" parent="TileMap" node_paths=PackedStringArray("quest_board", "tavern")]
+position = Vector2(24, 24)
+texture = SubResource("MeshTexture_fxaya")
+script = ExtResource("2_egkfq")
+quest_board = NodePath("QuestBoard")
+tavern = NodePath("Tavern")
+population = 6
+
+[node name="QuestBoard" type="Container" parent="TileMap/Location1"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("2_i7lf4")
+
+[node name="Tavern" type="Container" parent="TileMap/Location1"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_vv8j4")
+
+[node name="5be84080-7fbe-4564-bcf3-3a789f22ed1f" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="4286e997-72c8-4c6d-97c9-bbcb51f3ef34" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="0bcb68d9-a3ee-4654-bbeb-c4ecd683806b" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="23874313-a0d0-4dd8-a298-21589312f13d" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="6fd54f7a-f590-43d7-add7-2e1c2b30817e" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="ed10cbc2-0bb9-441c-9af7-ea683d6e7174" type="CharacterBody2D" parent="TileMap/Location1" node_paths=PackedStringArray("settlement", "quest_board") groups=["unit"]]
+position = Vector2(-24, -24)
+script = ExtResource("3_6oc8d")
+settlement = NodePath("..")
+quest_board = NodePath("../QuestBoard")
+
+[node name="Location2" type="Sprite2D" parent="TileMap"]
+position = Vector2(24, 24)
+texture = SubResource("MeshTexture_fxaya")
+script = ExtResource("5_qvbxl")
+
+[node name="Location2_1" type="Container" parent="TileMap/Location2" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_probablity = 1.0
+quest_min_reward = 10
+quest_max_reward = 20
+quest_max_count = 3
+monsters_spawn_rate = 0.0
+
+[node name="Location2_2" type="Container" parent="TileMap/Location2" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_rank = 2
+quest_min_reward = 15
+quest_max_reward = 30
+quest_max_count = 3
+quest_min_effort = 2
+quest_max_effort = 5
+zone_difficulty = 2
+monsters_spawn_rate = 0.0
+
+[node name="Location3" type="Sprite2D" parent="TileMap"]
+position = Vector2(24, 24)
+texture = SubResource("MeshTexture_fxaya")
+script = ExtResource("5_qvbxl")
+
+[node name="Location3_1" type="Container" parent="TileMap/Location3" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_rank = 2
+quest_min_reward = 12
+quest_max_reward = 24
+quest_min_count = 0
+quest_max_count = 5
+quest_min_effort = 3
+quest_max_effort = 5
+zone_difficulty = 3
+
+[node name="Location3_2" type="Container" parent="TileMap/Location3" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_rank = 2
+quest_probablity = 0.1
+quest_min_reward = 20
+quest_max_reward = 40
+quest_min_count = 0
+quest_max_count = 3
+quest_min_effort = 2
+quest_max_effort = 4
+zone_difficulty = 2
+
+[node name="Location4" type="Sprite2D" parent="TileMap"]
+position = Vector2(24, 24)
+texture = SubResource("MeshTexture_fxaya")
+script = ExtResource("5_qvbxl")
+
+[node name="Location4_1" type="Container" parent="TileMap/Location4" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_rank = 3
+quest_min_reward = 16
+quest_max_reward = 32
+quest_max_count = 2
+quest_min_effort = 5
+quest_max_effort = 8
+zone_difficulty = 3
+
+[node name="Location4_2" type="Container" parent="TileMap/Location4" node_paths=PackedStringArray("quest_board")]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_5ryou")
+quest_board = NodePath("../../Location1/QuestBoard")
+quest_rank = 4
+quest_probablity = 0.1
+quest_min_reward = 30
+quest_max_reward = 50
+zone_difficulty = 4
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameReleaseOverlay" parent="CanvasLayer" instance=ExtResource("8_7pu6u")]
+offset_top = -90.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="GameSession" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 32
+
+[node name="TurnState" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/GameSession"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+text = "{turn}"
+
+[node name="MoneyState" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/GameSession"]
+layout_mode = 2
+text = "{money}"
+
+[node name="UnitState" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/GameSession"]
+layout_mode = 2
+text = "{units}"
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/MarginContainer/VBoxContainer/GameSession"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_duk27")
+
+[node name="QuestState" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/GameSession"]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+text = "{quests}"
+
+[node name="QuestState" type="HBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 32
+
+[node name="UnitList" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/QuestState"]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "{units}"
+
+[node name="VSeparator" type="VSeparator" parent="CanvasLayer/MarginContainer/VBoxContainer/QuestState"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/separator = SubResource("StyleBoxEmpty_duk27")
+
+[node name="QuestList" type="RichTextLabel" parent="CanvasLayer/MarginContainer/VBoxContainer/QuestState"]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+text = "{quests}"

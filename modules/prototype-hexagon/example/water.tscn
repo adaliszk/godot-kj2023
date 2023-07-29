@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgxfy0sy1hr04"]
+
+[ext_resource type="Shader" uid="uid://jxgmbg60rupp" path="res://modules/prototype-hexagon/shaders/water.tres" id="1_mymt8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_comsc"]
+render_priority = 0
+shader = ExtResource("1_mymt8")
+shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2vw02"]
+material = SubResource("ShaderMaterial_comsc")
+size = Vector2(30, 30)
+subdivide_width = 20
+subdivide_depth = 20
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f6eff"]
+lightmap_size_hint = Vector2i(64, 34)
+top_radius = 2.0
+bottom_radius = 2.0
+
+[node name="water" type="Node3D"]
+
+[node name="Water" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2vw02")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_f6eff")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50907, 0, 1.75021)
+mesh = SubResource("CylinderMesh_f6eff")
+skeleton = NodePath("../MeshInstance3D")

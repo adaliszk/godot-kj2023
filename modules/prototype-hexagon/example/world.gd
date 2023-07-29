@@ -12,9 +12,8 @@ func _ready() -> void:
 
 
 func _process(delta) -> void:
-	var direction = (
-		Input.get_vector("camera_left", "camera_right", "camera_up", "camera_down").normalized()
-	)
+	var input = Input.get_vector("camera_left", "camera_right", "camera_up", "camera_down")
+	var direction = input.normalized()
 	var x = direction.x / 3 + direction.y / 2
 	var y = direction.y / 3 - direction.x / 2
 
@@ -30,7 +29,3 @@ func _process(delta) -> void:
 	camera.global_transform = camera.global_transform.interpolate_with(
 		focus_xform, camera_speed * delta
 	)
-
-	# var target_xform = target.translated_local(offset)
-	# camera.global_transform = camera.global_transform.interpolate_with(target_xform, lerp_speed * delta)
-	# camera.look_at(target.global_transform.origin, target.transform.basis.y)

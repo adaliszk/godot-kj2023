@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1yyimnohr2i4"]
+
+[ext_resource type="Shader" uid="uid://cpig7b7mywdvy" path="res://modules/prototype-hexagon/shaders/fog.tres" id="1_wlmt5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3m02d"]
+render_priority = 0
+shader = ExtResource("1_wlmt5")
+shader_parameter/WaveSpeed = 0.01
+shader_parameter/Disturbance = 0.05
+shader_parameter/WaveSpeed2 = 0.1
+shader_parameter/Opacity = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_t2ntg"]
+material = SubResource("ShaderMaterial_3m02d")
+size = Vector3(100, 1, 100)
+subdivide_width = 20
+subdivide_height = 20
+subdivide_depth = 20
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wu56o"]
+top_radius = 3.5
+bottom_radius = 2.5
+rings = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfv7y"]
+render_priority = 0
+shader = ExtResource("1_wlmt5")
+shader_parameter/WaveSpeed = 0.1
+shader_parameter/Disturbance = 0.1
+shader_parameter/WaveSpeed2 = 0.1
+shader_parameter/Opacity = 0.9
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_thnxu"]
+top_radius = 2.5
+bottom_radius = 1.5
+rings = 8
+
+[node name="fog" type="Node3D"]
+
+[node name="fog-of-war" type="CSGCombiner3D" parent="."]
+cast_shadow = 0
+
+[node name="fog-zone" type="CSGMesh3D" parent="fog-of-war"]
+mesh = SubResource("BoxMesh_t2ntg")
+
+[node name="visibility1" type="CSGMesh3D" parent="fog-of-war"]
+operation = 2
+snap = 0.1
+mesh = SubResource("CylinderMesh_wu56o")
+material = SubResource("ShaderMaterial_gfv7y")
+
+[node name="visibility2" type="CSGMesh3D" parent="fog-of-war"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.16113)
+operation = 2
+snap = 0.1
+mesh = SubResource("CylinderMesh_thnxu")
+material = SubResource("ShaderMaterial_gfv7y")
